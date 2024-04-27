@@ -1,5 +1,7 @@
 use std::{f32::consts::PI, thread, time::Duration};
 
+use rand::prelude::*;
+
 type Coordinate = (usize, usize);
 type Size = (usize, usize);
 type Point = (f32, f32);
@@ -48,13 +50,20 @@ impl Node {
 }
 
 fn main() {
-    let mut nodes = vec![Node {
-        position: (1.0, 1.0),
-        velocity: Velocity {
-            direction: 1.5,
-            distance: 1.0,
-        },
-    }];
+    let mut rng = rand::thread_rng();
+
+    let mut nodes: Vec<Node> = (0..100)
+        .map(|_| Node {
+            position: (
+                rng.gen::<f32>() * PLAY_AREA_SIZE.0 as f32,
+                rng.gen::<f32>() * PLAY_AREA_SIZE.1 as f32,
+            ),
+            velocity: Velocity {
+                direction: rng.gen::<f32>() * 2.0 * PI,
+                distance: rng.gen::<f32>(),
+            },
+        })
+        .collect();
     for _ in 0..100000 {
         nodes.iter_mut().for_each(Node::update_position);
         render(&nodes);
