@@ -52,13 +52,13 @@ fn main() {
         position: (1.0, 1.0),
         velocity: Velocity {
             direction: 1.5,
-            distance: 15.0,
+            distance: 1.0,
         },
     }];
-    for _ in 0..10000 {
+    for _ in 0..100000 {
         nodes.iter_mut().for_each(Node::update_position);
         render(&nodes);
-        thread::sleep(Duration::from_millis(100));
+        thread::sleep(Duration::from_millis(15));
     }
 }
 
